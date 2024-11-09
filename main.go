@@ -1,4 +1,4 @@
-package main
+package db_connect
 
 import (
 	"database/sql"
@@ -57,8 +57,12 @@ func ConnectToExtendedSqliteDatabase(dbLocation string) (*sql.DB, error) {
 
 	connection, err := sql.Open("sqlite3_extended", dbLocation)
 
-	if connection.Ping() == nil || err != nil {
-		return nil, fmt.Errorf("Failed to connect the database: %s", dbLocation)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to connect the database: %s\n%s", dbLocation, err)
+	}
+
+	if err := connection.Ping(); err != nil {
+		return nil, fmt.Errorf("Unable to ping database: %s\n%s", dbLocation, err)
 	}
 
 	log.Println("Database connected successfully")
