@@ -1,4 +1,4 @@
-package db_connect
+package database_connect
 
 import (
 	"testing"
